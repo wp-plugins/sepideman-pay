@@ -2,12 +2,12 @@
 /**
  * Plugin Name: پرداخت سپیدمان
  * Plugin URI: http://plugins.sepideman.com/sepideman-pay
- * Description: پرداخت سپیدمان، با کاربری آسان برای پارس پال
- * Version: 2.0.0
+ * Description: افزونه پرداخت سپیدمان برای پارس پال، دارای کد کوتاه برای ایجاد فرم دلخواه پرداخت
+ * Version: 2.0.1
  * Author: زرتشت سپیدمان
  * Author URI: http://www.ZartoshtSepideman.com
  * License: GPLv2
- * Tags: ParsPal, Sepideman, Bank, Payment
+ * Tags: Parspal, Sepideman, Bank, Payment, پارس پال, بانک, پرداخت آنلاین, سپیدمان , shortcode, کد کوتاه
  */
 if ( ! defined( 'ABSPATH' ) ) {die();}
 
@@ -49,7 +49,6 @@ function sepideman_pay_form($atts){
 	
 	$MerchentID = esc_attr( get_option('merchent_id') );
 	$Password = esc_attr( get_option('password') );
-	$PageTitle = the_title();
 	$ShowOrderNumberField = false;
 	$ReturnPath = get_permalink();
 	
@@ -97,27 +96,27 @@ else
 						$result .= '<form method="post">
 											<table id="first_form">
 											<tr>
-                                <td colspan="3">جهت ادامه عملیات اطلاعات زیر را تکمیل کنید.</td></tr>';
+                                <td colspan="3" style="padding-bottom: 5px;">جهت ادامه عملیات اطلاعات زیر را تکمیل کنید.</td></tr>';
 						if ($atts['price'] != '' && is_numeric($atts['price'])) {
-								$result .= '<tr><td colspan="2">بها : ' . $atts['price'] . ' تومان<input type="hidden" name="Price" value="' . $atts['price'] . '"/></td><td id="alertPrice"></td></tr>';
+								$result .= '<tr><td colspan="2" style="padding-bottom: 5px;">بها : ' . $atts['price'] . ' تومان<input type="hidden" name="Price" value="' . $atts['price'] . '"/></td><td id="alertPrice"></td></tr>';
 						}
 						else {
-								$result .= '<tr><td style="width: 140px">بها : </td><td><input type="text" name="Price" dir="ltr" id="txtPrice" size="6"/> تومان</td></tr>';
+								$result .= '<tr><td style="width: 140px; padding-bottom: 5px;">بها : </td><td><input type="text" name="Price" dir="ltr" id="txtPrice" size="6"/> تومان</td></tr>';
 						}
-						$result .= '<tr><td style="width: 140px">نام و نام خانوادگی : </td><td><input type="text" name="Paymenter"  id="txtPaymenter" />&nbsp;&nbsp;<i>*</i></td></tr>
-										<tr><td>ایمیل : </td><td><input type="text" dir="ltr" name="Email"  id="txtEmail" class="enput"/>&nbsp;&nbsp;<i>*</i></td></tr>
-										<tr><td>تلفن : </td><td><input type="text" dir="ltr" name="Mobile" id="txtMobile" class="enput"  maxlength="12"/>&nbsp;&nbsp;<i>*</i>
-										<tr><td>توضیحات خرید : </td><td>';
+						$result .= '<tr><td style="width: 140px; padding-bottom: 5px;">نام و نام خانوادگی : </td><td><input type="text" name="Paymenter"  id="txtPaymenter" />&nbsp;&nbsp;<i>*</i></td></tr>
+										<tr><td style="padding-bottom: 5px;">ایمیل : </td><td><input type="text" dir="ltr" name="Email"  id="txtEmail" class="enput"/>&nbsp;&nbsp;<i>*</i></td></tr>
+										<tr><td style="padding-bottom: 5px;">تلفن : </td><td><input type="text" dir="ltr" name="Mobile" id="txtMobile" class="enput"  maxlength="12"/>&nbsp;&nbsp;<i>*</i>
+										<tr><td style="padding-bottom: 5px;">توضیحات خرید : </td><td>';
 						if ($atts['des'] != '')
 								$result .= str_replace($match, $replace, $atts['des']) . '<input type="hidden" name="Description" value="' . str_replace($match, $replace, $atts['des']) . '"/></td></tr>';
 						else {
 								$result .= '<input type="text" name="Description" value="خرید "/></td></tr>';
 						}
 						if ($ShowOrderNumberField)
-								$result .= '<tr><td>شماره سفارش : </td><td><input type="text" name="ResNumber"/></td></tr>';
+								$result .= '<tr><td style="padding-bottom: 5px;">شماره سفارش : </td><td><input type="text" name="ResNumber"/></td></tr>';
 						else
-								$result .= '<tr><td colspan="2"><input type="hidden" name="ResNumber" value="-"/></td></tr>';
-						$result .= '<tr><td colspan="2"><p id="alert"></p><input type="submit" name="submit" value="ادامه عمليات خريد" class="sbtn" onclick="return Validate()"/></td></tr></table></form>';
+								$result .= '<tr><td colspan="2" style="padding-bottom: 5px;"><input type="hidden" name="ResNumber" value="-"/></td></tr>';
+						$result .= '<tr><td colspan="2" style="padding-bottom: 5px;"><p id="alert"></p><input type="submit" name="submit" value="ادامه عمليات خريد" class="sbtn" onclick="return Validate()"/></td></tr></table></form>';
 }
 
                 $result .= '

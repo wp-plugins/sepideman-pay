@@ -1,18 +1,40 @@
 === پرداخت سپیدمان ===
 Contributors: Zartosht
 Donate link: http://www.sepideman.com
-Tags: Parspal, Sepideman, Bank, Payment, پارس پال, بانک, پرداخت آنلاین
+Tags: Parspal, Sepideman, Bank, Payment, پارس پال, بانک, پرداخت آنلاین, سپیدمان , shortcode, کد کوتاه
 Requires at least: 3.0.1
 Tested up to: 4.1.1
 Stable tag: trunk
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-افزونه پرداخت سپیدمان برای پارس پال، با تنظیمات دلخواه
+افزونه پرداخت سپیدمان برای پارس پال، دارای کد کوتاه برای ایجاد فرم دلخواه پرداخت
 
 == Description ==
 
-افزونه پرداخت سپیدمان برای پارسپال، به همراه یک کد کوتاه برای راحتی در استفاده ساخته شده توسط سپیدمان http://www.sepideman.com
+افزونه پرداخت سپیدمان طراحی و پشتیبانی شده توسط سپیدمان
+
+برای استفاده به راحتی با فراخوانی کد کوتاه [sp] می‌توانید فرم پرداخت سپیدمان را فراخوانی کنید. این افزونه شامل دو ورودی برای ساخت فرم دلخواه است:
+
+1. price:
+این ورودی فیلد پرداخت را پر می‌کند.
+1. des:
+این ورودی وظیفه پر کردن بخش توضیحات را به عهده دارد.
+
+برای استفاده می‌تواندی کد کوتاه را به این شکل فراخوانی کنید:
+* [sp price="250000" des="خرید هاست"]
+
+
+در صورت بروز هرگونه مشکل و انتقاد و پیشنهاد از راه‌های ارتباطی زیر استفاده کنید:
+* http://www.SecuritExperts.com
+* http://www.Sepideman.com
+* http://www.ZartoshtSepideman.com
+
+* fb/SecuritExperts
+* insta/SecuritExperts
+* insta/ImenWeb
+* G+/+ImenWeb
+* twitter/SecuritExperts
 
 == Installation ==
 
@@ -22,6 +44,10 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 1. برای استفاده پیشرفته تر می‌توانید به این شکل افزونه را فراخوانی کنید. [sp price="250000" des="خرید هاست"]
 
 == Changelog ==
+
+= 2.0.1 =
+* چند تغییر جزئی در ظاهر
+* افزودن طرز استفاده کامل
 
 = 2.0.0 =
 * کاهش حجم افزونه
@@ -41,3 +67,5 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 == خصوصیات ==
 
 1. درگاه پرداخت پارس پال با استفاده آسان
+1. کد کوتاه
+1. فرم اختصاصی
