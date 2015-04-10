@@ -3,7 +3,7 @@
  * Plugin Name: پرداخت سپیدمان
  * Plugin URI: http://plugins.sepideman.com/sepideman-pay
  * Description: افزونه پرداخت سپیدمان برای پارس پال، دارای کد کوتاه برای ایجاد فرم دلخواه پرداخت
- * Version: 2.0.1
+ * Version: 2.5.0
  * Author: زرتشت سپیدمان
  * Author URI: http://www.ZartoshtSepideman.com
  * License: GPLv2
@@ -14,12 +14,68 @@ if ( ! defined( 'ABSPATH' ) ) {die();}
 add_action( 'admin_menu', 'sepideman_menu' );
 function sepideman_menu(){
 	add_menu_page( 'پرداخت سپیدمان', 'پرداخت سپیدمان', 'manage_options', 'sepideman-pay', 'sepideman_pay', plugins_url( 'sepideman-pay/images/sepideman_pay.png' ), 6 ); 
+	add_submenu_page( 'sepideman-pay', 'راهنمای پرداخت سپیدمان', 'راهنما', 'manage_options', 'sepideman-pay-help', 'sepideman_pay_help');
+}
+
+function sepideman_pay_help(){
+	echo '<div class="wrap"><h2>راهنمای پرداخت سپیدمان</h2><p>کاربر گرامی ، پیرو قوانین جهت استفاده از خدمات می بایست لوگو تاییدیه پرداخت را در صفحه اصلی سایت خود قرار دهید . برای اینکار با مراجعه به پنل کاربری خود در وبسایت پارس پال از منوی خدمات پرداخت، درگاه‌های پرداخت من، با انتخاب یکی از درگاه های پرداخت خود پیامی بر روی صفحه ظاهر می شود که از طریق آن کدی شبیه به زیر دریافت می کنید:</p>
+
+<div dir="ltr"><code>
+<!-- Gateway Verify Logo -->
+< script language="javascript" type="text/javascript"  src="http://www.parspal.com/xContext/Component/Verify/?UI=XXXXXXXXXXXXXXXX&GID=XXXXX&MID=XXXXXXXXXXXXXXXX&Mode=1" >
+</ script>
+<noscript><a title="درگاه پرداخت"  href="http://www.parspal.com" >درگاه پرداخت پارس پال</a></noscript>
+<!-- Gateway Verify Logo -->
+</code>
+</div>
+<p>
+شما باید کد مقابل src را تا قبل از Mode& انتخاب کنید، چیزی شبیه به این:</p>
+<div dir="ltr"><code>http://www.parspal.com/xContext/Component/Verify/?UI=XXXXXXXXXXXXXXXX&GID=XXXXX&MID=XXXXXXXXXXXXXXXX</code></div>
+<p>این کد را در پنل افزونه در محل مناسب پیست کنید.</p>
+
+<p>برای استفاده به راحتی با فراخوانی کد کوتاه [sp] می‌توانید فرم پرداخت سپیدمان را فراخوانی کنید. این افزونه شامل دو ورودی برای ساخت فرم دلخواه است:</p>
+<ul>
+<li>price: این ورودی فیلد پرداخت را پر می‌کند.</li>
+<li>des: این ورودی وظیفه پر کردن بخش توضیحات را به عهده دارد.</li>
+</ul>
+
+<p>برای استفاده می‌تواندی کد کوتاه را به این شکل فراخوانی کنید:</p>
+<div dir="ltr"><code>[sp price="250000" des="خرید هاست"]</code></div>
+
+<p>در صورت بروز هرگونه مشکل و انتقاد و پیشنهاد از راه‌های ارتباطی زیر استفاده کنید:</p>
+<div style="text-align: center">
+<a href="http://www.SecuritExperts.com" target="_blank">
+<img src="' . plugins_url( 'sepideman-pay/images/securitexperts-80.png' ) . '" title="وبسایت خبری امنیتی سپیدمان، سکیوریتی اکسپرتز">
+</a>
+<a href="http://www.Sepideman.com" target="_blank">
+<img src="' . plugins_url( 'sepideman-pay/images/sepideman-80.png' ) . '" title="وبسایت رسمی سپیدمان">
+</a>
+<a href="http://www.ZartoshtSepideman.com" target="_blank">
+<img src="' . plugins_url( 'sepideman-pay/images/zartoshtsepideman-80.png' ) . '" title="وبسایت شخصی مدیر عامل سپیدمان">
+</a>
+<a href="https://www.facebook.com/SecuritExperts" target="_blank">
+<img src="' . plugins_url( 'sepideman-pay/images/fb.jpg' ) . '" title="سپیدمان در فیسبوک">
+</a>
+<a href="https://www.instagram.com/SecuritExperts" target="_blank">
+<img src="' . plugins_url( 'sepideman-pay/images/insta.png' ) . '" title="سکیوریتی اکسپرتز در اینستاگرام">
+</a>
+<a href="https://www.instagram.com/Sepideman" target="_blank">
+<img src="' . plugins_url( 'sepideman-pay/images/insta.png' ) . '" title="سپیدمان در اینستاگرام">
+</a>
+<a href="https://www.twitter.com/SecuritExperts" target="_blank">
+<img src="' . plugins_url( 'sepideman-pay/images/twitter.jpg' ) . '" title="سپیدمان در توییتر">
+</a>
+</div>
+
+</div>';
 }
 
 add_action( 'admin_init', 'register_sepideman_pay_settings' );
 function register_sepideman_pay_settings(){
 	register_setting( 'sp-settings', 'merchent_id' );
 	register_setting( 'sp-settings', 'password' );
+	register_setting( 'sp-settings', 'verify' );
+	register_setting( 'sp-settings', 'model' );
 }
 
 function sepideman_pay() {
@@ -30,14 +86,103 @@ function sepideman_pay() {
 	echo '<form method="post" action="options.php">';
 	settings_fields( 'sp-settings' );
 	do_settings_sections( 'sp-settings' );
-	echo '<br><br><table><tr>';
-	echo '<td style="width: 110px">شناسه درگاه : </td><td><input dir="ltr" type="text" name="merchent_id" value="' . esc_attr( get_option('merchent_id') ) . '"></td></tr>';
+	echo '<br><br><table style="width: 100%;"><tr>';
+	echo '<td style="width: 10%">شناسه درگاه : </td><td style="width: 90%;"><input dir="ltr" type="text" name="merchent_id" value="' . esc_attr( get_option('merchent_id') ) . '"></td></tr>';
 	echo '<tr><td>رمز عبور : </td><td><input dir="ltr" type="text" name="password" value="' . esc_attr( get_option('password') ) . '"></td></tr>';
+	echo '<tr><td>کد تاییدیه : </td><td><input style="width: 100%;" dir="ltr" type="text" name="verify" value="' . esc_attr( get_option('verify') ) . '"></td></tr>';
+	echo '<tr><td>استایل تاییدیه : </td><td><select name="model">';
+	
+	echo '<option ';
+	if(esc_attr( get_option("model") ) == "1"){ echo "selected='selected' "; }
+	echo 'value="1">استایل 1</option>';
+	echo '<option ';
+	if(esc_attr( get_option("model") ) == "2"){ echo "selected='selected' "; }
+	echo 'value="2">استایل 2</option>';
+	echo '<option ';
+	if(esc_attr( get_option("model") ) == "3"){ echo "selected='selected' "; }
+	echo 'value="3">استایل 3</option>';
+	echo '<option ';
+	if(esc_attr( get_option("model") ) == "4"){ echo "selected='selected' "; }
+	echo 'value="4">استایل 4</option>';
+	echo '<option ';
+	if(esc_attr( get_option("model") ) == "5"){ echo "selected='selected' "; }
+	echo 'value="5">استایل 5</option>';
+	echo '<option ';
+	if(esc_attr( get_option("model") ) == "6"){ echo "selected='selected' "; }
+	echo 'value="6">استایل 6</option>';
+	echo '<option ';
+	if(esc_attr( get_option("model") ) == "7"){ echo "selected='selected' "; }
+	echo 'value="7">استایل 7</option>';
+	echo '<option ';
+	if(esc_attr( get_option("model") ) == "8"){ echo "selected='selected' "; }
+	echo 'value="8">استایل 8</option>';
+	echo '<option ';
+	if(esc_attr( get_option("model") ) == "9"){ echo "selected='selected' "; }
+	echo 'value="9">استایل 9</option>';
+	echo '<option ';
+	if(esc_attr( get_option("model") ) == "10"){ echo "selected='selected' "; }
+	echo 'value="10">استایل 10</option>';
+	echo '<option ';
+	if(esc_attr( get_option("model") ) == "11"){ echo "selected='selected' "; }
+	echo 'value="11">استایل 11</option>';
+	
+	echo '</select></td></tr>';
 	echo '<tr><td colspan="2">';
 	echo submit_button();
 	echo '</td></tr>';
 	echo '</table></form></div>';
 	echo '<hr>';
+	echo 'کاربر گرامی ، پیرو قوانین جهت استفاده از خدمات می بایست لوگو تاییدیه پرداخت را در صفحه اصلی سایت خود قرار دهید . لطفا از بین استایل‌های موجود زیر یکی را انتخاب کنید.';
+	echo '<table><tr>';
+	echo '<td>' .
+	'استایل 1';
+	echo '</td><td>' .
+	'<img src="https://www.parspal.com/Images/Gateway/Icons/01.png">';
+	echo '</td><td>' .
+	'استایل 2';
+	echo '</td><td>' .
+	'<img src="https://www.parspal.com/Images/Gateway/Icons/02.png">';
+	echo '</td><td>' .
+	'استایل 3';
+	echo '</td><td>' .
+	'<img src="https://www.parspal.com/Images/Gateway/Icons/03.png">';
+	echo '</td>';
+	echo '</tr><tr>';
+	echo '<td>' .
+	'استایل 4';
+	echo '</td><td>' .
+	'<img src="https://www.parspal.com/Images/Gateway/Icons/04.png">';
+	echo '</td><td>' .
+	'استایل 5';
+	echo '</td><td>' .
+	'<img src="https://www.parspal.com/Images/Gateway/Icons/05.png">';
+	echo '</td><td>' .
+	'استایل 6';
+	echo '</td><td>' .
+	'<img src="https://www.parspal.com/Images/Gateway/Icons/06.png">';
+	echo '</td></tr><tr>';
+	echo '<td>' .
+	'استایل 7';
+	echo '</td><td>' .
+	'<img src="https://www.parspal.com/Images/Gateway/Icons/07.png">';
+	echo '</td><td>' .
+	'استایل 8';
+	echo '</td><td>' .
+	'<img src="https://www.parspal.com/Images/Gateway/Icons/08.png">';
+	echo '</td><td>' .
+	'استایل 9';
+	echo '</td><td>' .
+	'<img src="https://www.parspal.com/Images/Gateway/Icons/09.png">';
+	echo '</td></tr><tr>';
+	echo '<td>' .
+	'استایل 10';
+	echo '</td><td>' .
+	'<img src="https://www.parspal.com/Images/Gateway/Icons/10.png">';
+	echo '</td><td>' .
+	'استایل 11';
+	echo '</td><td>' .
+	'<img src="https://www.parspal.com/Images/Gateway/Icons/11.png">';
+	echo '</td><td></td><td></td></tr></table>';
 }
 
 add_shortcode( 'sp', 'sepideman_pay_form' );
@@ -51,7 +196,7 @@ function sepideman_pay_form($atts){
 	$Password = esc_attr( get_option('password') );
 	$ShowOrderNumberField = false;
 	$ReturnPath = get_permalink();
-	
+	echo esc_attr( get_option('model') );
 	
 $match = array("<", ">", "'");
 $replace = array("&nbsp;", "&nbsp;", "&nbsp;");
@@ -120,10 +265,9 @@ else
 }
 
                 $result .= '
-                   <div  style="margin-top:12px;">
-						پرداخت توسط درگاه بانک 
-                        <img src="' . plugins_url( 'sepideman-pay/images/mellat.png' ) . '" id="img" />
-						 و کلیه کارت‌های عضو شتاب.
+                   <div  style="margin-top:12px;text-align: center;"><script language="javascript" type="text/javascript"  src="' .
+						esc_attr( get_option('verify') ) . '&Mode=' . esc_attr( get_option('model') ) .
+					'" ></script><noscript><a title="درگاه پرداخت"  href="http://www.parspal.com" >درگاه پرداخت پارس پال</a></noscript>
 					</div>
 
    <script type="text/javascript" language="javascript">
