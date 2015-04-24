@@ -3,7 +3,7 @@ Contributors: Zartosht
 Donate link: http://www.sepideman.com
 Tags: Parspal, Sepideman, Bank, Payment, پارس پال, بانک, پرداخت آنلاین, سپیدمان , shortcode, کد کوتاه
 Requires at least: 3.0.1
-Tested up to: 4.1.1
+Tested up to: 4.2
 Stable tag: trunk
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
